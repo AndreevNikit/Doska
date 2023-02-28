@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TableDoska</string>
+    <string name="my_ads">Мои объявления</string>
+    <string name="cars_ads">Машины</string>
+    <string name="pc_ads">Компьютеры</string>
+    <string name="dm_ads">Бытовые техники</string>
+    <string name="smartphone_ads">Смартфоны</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="sign_out">Выход</string>
+    <string name="sing_in">Вход</string>
+
+</resources>
