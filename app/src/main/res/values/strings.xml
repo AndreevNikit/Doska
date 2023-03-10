@@ -7,7 +7,11 @@
     <string name="smartphone_ads">Смартфоны</string>
     <string name="sign_up">Регистрация</string>
     <string name="sign_out">Выход</string>
-    <string name="sing_in">Вход</string>
+    <string name="sign_in">Вход</string>
     <string name="account">Аккаунт</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up_button">Зарегестрироваться</string>
+    <string name="sign_in_button">Войти</string>
 
 </resources>
