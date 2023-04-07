@@ -127,7 +127,7 @@ public class EditActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getUid() != null)
         {
-              String key = dRef.push().getKey();
+            String key = dRef.push().getKey();
             NewPost post = new NewPost();
 
             post.setImageId(uploadUri.toString());
@@ -135,9 +135,12 @@ public class EditActivity extends AppCompatActivity {
             post.setTel(edTel.getText().toString());
             post.setPrice(edPrice.getText().toString());
             post.setDisc(edDisc.getText().toString());
-            post.getKey(key);
+            post.setKey(key);
+            post.setCat(spinner.getSelectedItem().toString());
+            post.setTime(String.valueOf(System.nanoTime()));
+            post.setUid(mAuth.getUid());
 
-            if(key != null)dRef.child(mAuth.getUid()).child(key).setValue(post);
+            if(key != null)dRef.child(key).child("Ads").setValue(post);
 
         }
     }
