@@ -1,6 +1,7 @@
 package com.example.doska.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doska.DbManager;
@@ -87,7 +89,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
             String price_tel = "Цена: " + newPost.getPrice() + " Тел: " + newPost.getTel();
             tvPriceTel.setText(price_tel);
             String textDisc = null;
-            if(newPost.getDisc().length() > 70) textDisc = newPost.getDisc().substring(0,70) + "...";
+            if(newPost.getDisc().length() > 50)
+            {
+                textDisc = newPost.getDisc().substring(0,50) + "...";
+            }
+            else
+            {
+                textDisc = newPost.getDisc();
+            }
             tvDisc.setText(textDisc);
 
             deleteButton.setOnClickListener(new View.OnClickListener()
@@ -96,9 +105,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
                 public void onClick(View v)
                 {
 
-                    dbManager.deleteItem(newPost);
-                    arrayPost.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
+
+                    deleteDialog();
                 }
             });
 
@@ -109,9 +117,33 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
             onItemClickCustom.onItemSelected(getAdapterPosition());
         }
     }
+
+    private void deleteDialog(final NewPost newPost, int position)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.delete_title);
+        builder.setMessage(R.string.delete_message);
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteDialog(newPost,getAdapterPosition());
+            }
+        });
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dbManager.deleteItem(newPost);
+                arrayPost.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
+        builder.show();
+    }
+
     public interface OnItemClickCustom
     {
-        public void onItemSelected(int position);
+         void onItemSelected(int position);
 
     }
 

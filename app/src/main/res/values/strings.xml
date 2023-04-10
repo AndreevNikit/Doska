@@ -23,4 +23,10 @@
     <string name="toggle_open">Open</string>
     <string name="toggle_close">Close</string>
 
+    <!-- EditActivity -->
+    <string name="delete_title">Удалить объявления?</string>
+    <string name="delete_message">Вы действительно хотите удалить сообщения?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
 </resources>
