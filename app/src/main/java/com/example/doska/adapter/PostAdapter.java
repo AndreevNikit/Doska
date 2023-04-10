@@ -2,6 +2,7 @@ package com.example.doska.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doska.DbManager;
+import com.example.doska.EditActivity;
 import com.example.doska.MainActivity;
 import com.example.doska.NewPost;
 import com.example.doska.R;
+import com.example.doska.utils.MyConstants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -58,7 +61,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
         private TextView tvPriceTel, tvDisc, tvTitle;
         private ImageView imAds;
         private LinearLayout edit_layout;
-        private ImageButton deleteButton;
+        private ImageButton deleteButton, editButton;
         private OnItemClickCustom onItemClickCustom;
 
         public ViewHolderData(@NonNull View itemView, OnItemClickCustom onItemClickCustom) {
@@ -68,6 +71,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
             tvDisc = itemView.findViewById(R.id.tvDisc);
             imAds = itemView.findViewById(R.id.imAds);
             deleteButton = itemView.findViewById(R.id.imDeleteItem);
+            editButton = itemView.findViewById(R.id.imEditItem);
             edit_layout = itemView.findViewById(R.id.edit_layout);
             itemView.setOnClickListener(this);
             this.onItemClickCustom = onItemClickCustom;
@@ -104,9 +108,27 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
                 @Override
                 public void onClick(View v)
                 {
+                    deleteDialog(newPost,getAdapterPosition());
+                }
+            });
 
-
-                    deleteDialog();
+            editButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent i = new Intent(context, EditActivity.class);
+                    i.putExtra(MyConstants.IMAGE_ID,newPost.getImageId());
+                    i.putExtra(MyConstants.TITLE,newPost.getTitle());
+                    i.putExtra(MyConstants.PRICE,newPost.getPrice());
+                    i.putExtra(MyConstants.TEL,newPost.getTel());
+                    i.putExtra(MyConstants.DISC,newPost.getDisc());
+                    i.putExtra(MyConstants.KEY,newPost.getKey());
+                    i.putExtra(MyConstants.UID,newPost.getUid());
+                    i.putExtra(MyConstants.TIME,newPost.getTime());
+                    i.putExtra(MyConstants.CAT,newPost.getCat());
+                    i.putExtra(MyConstants.EDIT_STATE,true);
+                    context.startActivity(i);
                 }
             });
 
@@ -118,7 +140,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
         }
     }
 
-    private void deleteDialog(final NewPost newPost, int position)
+    private void deleteDialog(final NewPost newPost, final int position)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.delete_title);
@@ -126,7 +148,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolderData
         builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                deleteDialog(newPost,getAdapterPosition());
+               // deleteDialog(newPost,getAdapterPosition());
             }
         });
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

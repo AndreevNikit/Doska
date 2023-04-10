@@ -41,10 +41,16 @@ public class DbManager {
             public void onSuccess(Void unused)
             {
                 DatabaseReference dbRef = db.getReference(newPost.getCat());
+
                 dbRef.child(newPost.getKey()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(context, "Всё успешно удалилась!", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Изображения не удалилась. Произошла ошибка!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

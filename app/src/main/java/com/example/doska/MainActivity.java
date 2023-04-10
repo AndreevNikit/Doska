@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DataSender dataSender;
     private DbManager dbManager;
     public static String MAUTH = "";
+    private String current_cat = "Машины";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         init();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(current_cat.equals("MyAds"))
+        {
+            dbManager.getMyAdsDataFromDb(mAuth.getUid());
+        }
+        else
+        {
+            dbManager.getDataFromDb(current_cat);
+        }
+
+    }
+
     private void init()
     {
         setOnItemClickCustom();
@@ -81,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAuth = FirebaseAuth.getInstance();
 
         getDataDB();
-        dbManager = new DbManager(dataSender);
+        dbManager = new DbManager(dataSender, this);
         dbManager.getDataFromDb("Машины");
         postAdapter.setDbManager(dbManager);
 
@@ -145,22 +161,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id)
         {
             case R.id.id_my_ads:
+                current_cat = "MyAds";
                 dbManager.getMyAdsDataFromDb(mAuth.getUid());
                 break;
 
             case R.id.id_cars_ads:
+                current_cat = "Машины";
                 dbManager.getDataFromDb("Машины");
                 break;
 
             case R.id.id_pc_ads:
+                current_cat = "Компьютеры";
                 dbManager.getDataFromDb("Компьютеры");
                 break;
 
             case R.id.id_smartphone_ads:
+                current_cat = "Смартфоны";
                 dbManager.getDataFromDb("Смартфоны");
                 break;
 
             case R.id.id_dm_ads:
+                current_cat = "Бытовая техника";
                 dbManager.getDataFromDb("Бытовая техника");
 
                 break;
