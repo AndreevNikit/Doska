@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getDataDB();
         dbManager = new DbManager(dataSender, this);
-        dbManager.getDataFromDb("Машины");
+        dbManager.getMyAdsDataFromDb(mAuth.getUid());
         postAdapter.setDbManager(dbManager);
 
 
