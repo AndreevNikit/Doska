@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("MyLogMainActivity", "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                Toast.makeText(getApplicationContext(), "Вы ввели недопустимый пароль или логин!",
                                         Toast.LENGTH_SHORT).show();
 
                             }
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("MyLogMainActivity", "signInWithCustomToken:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+                            Toast.makeText(getApplicationContext(), "Вы ввели неправильный пароль или логин!",
                                     Toast.LENGTH_SHORT).show();
 
                         }
